@@ -34,24 +34,24 @@ def draw_score_rank(pic, type=95, scale = 1):
         img_path = "res/95.png"
     if (type == "极"):
         img_path = "res/100.png"
-    draw_small_pic(img_path, pic, (1000, 100), scale)
+    draw_small_pic(img_path, pic, (1000, 50), scale)
 
 def draw_difficulty(pic, difficulty = 0, scale = 1):
     if (difficulty == "鬼"):
         img_path = "res/difficulty_Oni.png"
     if (difficulty == "里鬼"):
         img_path = "res/difficulty_UraOni.png"
-    draw_small_pic(img_path, pic, (1050, 400), scale)
+    draw_small_pic(img_path, pic, (1050, 350), scale)
 
 def draw_small_taiko(pic, scale):
-    draw_small_pic("res/my_taiko.png", pic, (150,350), scale)
+    draw_small_pic("res/my_taiko.png", pic, (150,330), scale)
 
 def draw_crown(pic, type=0, scale = 1):
     if (type == "通关"):
         img_path = "res/crown_Clear.png"
     if (type == "全连"):
         img_path = "res/crown_gold.png"
-    draw_small_pic(img_path, pic, (1050, 600), scale)
+    draw_small_pic(img_path, pic, (1050, 550), scale)
 
 def generate_image():
     try:
@@ -63,8 +63,8 @@ def generate_image():
         font_type = combo_font.get()
 
         background = Image.open('res/background.png')
-        background = draw_text(text1, background, 120, (250, 150), font_type)
-        background = draw_text(text2, background, 120, (250, 300), font_type)
+        background = draw_text(text1, background, 120, (250, 80), font_type)
+        background = draw_text(text2, background, 120, (250, 230), font_type)
         draw_score_rank(background, score_type, scale=2)
         draw_small_taiko(background, scale=2)
         draw_difficulty(background, difficulty, scale=2)
