@@ -30,7 +30,7 @@ def draw_text(text, pic, size, position, font_type):
 def draw_score_rank(pic, type=95, scale = 1):
     if (type == "粉雅"):
         img_path = "res/90.png"
-    if (type == "彩雅"):
+    if (type == "紫雅"):
         img_path = "res/95.png"
     if (type == "极"):
         img_path = "res/100.png"
@@ -56,19 +56,21 @@ def draw_crown(pic, type=0, scale = 1):
 def generate_image():
     try:
         text1 = entry_text1.get()
-        text2 = entry_text2.get()
+        text_sub = entry_text_sub.get()
+        text_score = entry_text_score.get()
         score_type = combo_score_type.get()
         difficulty = combo_difficulty.get()
         crown = combo_crown.get()
         font_type = combo_font.get()
 
         background = Image.open('res/background.png')
-        background = draw_text(text1, background, 120, (250, 80), font_type)
-        background = draw_text(text2, background, 120, (250, 230), font_type)
         draw_score_rank(background, score_type, scale=2)
         draw_small_taiko(background, scale=2)
         draw_difficulty(background, difficulty, scale=2)
         draw_crown(background, crown, scale=2)
+        background = draw_text(text1, background, 100, (250, 100), font_type)
+        background = draw_text(text_sub, background, 100, (300, 200), font_type)
+        background = draw_text(text_score, background, 100, (250, 300), font_type)
 
         output_path = 'result.png'
         background.save(output_path)
@@ -85,6 +87,8 @@ if __name__ == '__main__':
     tk.Label(root, text="曲名").grid(row=0, column=0, padx=10, pady=5)
     entry_text1 = tk.Entry(root, width=30)
     entry_text1.grid(row=0, column=1, padx=10, pady=5)
+    entry_text_sub = tk.Entry(root, width=30)
+    entry_text_sub.grid(row=0, column=2, padx=10, pady=5)
 
     tk.Label(root, text="字库").grid(row=1, column=0, padx=10, pady=5)
     combo_font = Combobox(root, values=["日文字库", "中文字库"], state="readonly", width=28)
@@ -93,8 +97,8 @@ if __name__ == '__main__':
 
     # 输入文本2
     tk.Label(root, text="分数").grid(row=2, column=0, padx=10, pady=5)
-    entry_text2 = tk.Entry(root, width=30)
-    entry_text2.grid(row=2, column=1, padx=10, pady=5)
+    entry_text_score = tk.Entry(root, width=30)
+    entry_text_score.grid(row=2, column=1, padx=10, pady=5)
 
     # 输入分数类型
     tk.Label(root, text="分数类型").grid(row=3, column=0, padx=10, pady=5)
