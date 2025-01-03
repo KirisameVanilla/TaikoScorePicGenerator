@@ -21,7 +21,7 @@ def draw_text(text, pic, size, position, font_type):
     x, y = position
     for dx in range(-outline_width, outline_width + 1):
         for dy in range(-outline_width, outline_width + 1):
-            if dx != 0 or dy != 0:  # 避免中心重复绘制
+            if dx != 0 or dy != 0:
                 draw.text((x + dx, y + dy), text, font=font, fill="orange")
 
     draw.text(position, text, font=font, fill="black")
@@ -83,7 +83,6 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.title("太鼓成绩图生成器")
 
-    # 输入文本1
     tk.Label(root, text="曲名").grid(row=0, column=0, padx=10, pady=5)
     entry_text1 = tk.Entry(root, width=30)
     entry_text1.grid(row=0, column=1, padx=10, pady=5)
@@ -92,10 +91,9 @@ if __name__ == '__main__':
 
     tk.Label(root, text="字库").grid(row=1, column=0, padx=10, pady=5)
     combo_font = Combobox(root, values=["日文字库", "中文字库"], state="readonly", width=28)
-    combo_font.set("日文字库")  # 默认值
+    combo_font.set("日文字库")
     combo_font.grid(row=1, column=1, padx=10, pady=5)
 
-    # 输入文本2
     tk.Label(root, text="分数").grid(row=2, column=0, padx=10, pady=5)
     entry_text_score = tk.Entry(root, width=30)
     entry_text_score.grid(row=2, column=1, padx=10, pady=5)
