@@ -1,9 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont
 import tkinter as tk
 from tkinter.ttk import Combobox
-from tkinter import filedialog, messagebox
+from tkinter import messagebox
 
-def draw_small_pic(small_img_path, pic, position, scale = 1):
+
+def draw_small_pic(small_img_path, pic, position, scale=1):
     img = Image.open(small_img_path)
     new_size = (int(img.width * scale), int(img.height * scale))
     img = img.resize(new_size, Image.Resampling.LANCZOS)
@@ -12,10 +13,10 @@ def draw_small_pic(small_img_path, pic, position, scale = 1):
 
 def draw_text(text, pic, size, position, font_type):
     draw = ImageDraw.Draw(pic)
-    if (font_type == "日文字库"):
-        font = ImageFont.truetype('res/J002-A-OTF-KanteiryuStd-Ultra.otf', size)
+    if font_type == "日文字库":
+        font = ImageFont.truetype("res/J002-A-OTF-KanteiryuStd-Ultra.otf", size)
     else:
-        font = ImageFont.truetype('res/AaKanTingLiu-2.ttf', size)
+        font = ImageFont.truetype("res/AaKanTingLiu-2.ttf", size)
 
     outline_width = 3
     x, y = position
@@ -27,31 +28,36 @@ def draw_text(text, pic, size, position, font_type):
     draw.text(position, text, font=font, fill="black")
     return pic
 
-def draw_score_rank(pic, type=95, scale = 1):
-    if (type == "粉雅"):
+
+def draw_score_rank(pic, type: str, scale=1):
+    if type == "粉雅":
         img_path = "res/90.png"
-    if (type == "紫雅"):
+    if type == "紫雅":
         img_path = "res/95.png"
-    if (type == "极"):
+    if type == "极":
         img_path = "res/100.png"
     draw_small_pic(img_path, pic, (1000, 50), scale)
 
-def draw_difficulty(pic, difficulty = 0, scale = 1):
-    if (difficulty == "鬼"):
+
+def draw_difficulty(pic, difficulty: str, scale=1):
+    if difficulty == "鬼":
         img_path = "res/difficulty_Oni.png"
-    if (difficulty == "里鬼"):
+    if difficulty == "里鬼":
         img_path = "res/difficulty_UraOni.png"
     draw_small_pic(img_path, pic, (1050, 350), scale)
 
-def draw_small_taiko(pic, scale):
-    draw_small_pic("res/my_taiko.png", pic, (150,330), scale)
 
-def draw_crown(pic, type=0, scale = 1):
-    if (type == "通关"):
+def draw_small_taiko(pic, scale):
+    draw_small_pic("res/my_taiko.png", pic, (150, 330), scale)
+
+
+def draw_crown(pic, type: str, scale=1):
+    if type == "通关":
         img_path = "res/crown_Clear.png"
-    if (type == "全连"):
+    if type == "全连":
         img_path = "res/crown_gold.png"
     draw_small_pic(img_path, pic, (1050, 550), scale)
+
 
 def generate_image():
     try:
@@ -63,7 +69,7 @@ def generate_image():
         crown = combo_crown.get()
         font_type = combo_font.get()
 
-        background = Image.open('res/background.png')
+        background = Image.open("res/background.png")
         draw_score_rank(background, score_type, scale=2)
         draw_small_taiko(background, scale=2)
         draw_difficulty(background, difficulty, scale=2)
@@ -72,14 +78,15 @@ def generate_image():
         background = draw_text(text_sub, background, 100, (300, 200), font_type)
         background = draw_text(text_score, background, 100, (250, 300), font_type)
 
-        output_path = 'result.png'
+        output_path = "result.png"
         background.save(output_path)
         background.show()
         messagebox.showinfo("成功", f"图片已保存为 {output_path}")
     except Exception as e:
         messagebox.showerror("错误", f"生成图片时出错：{e}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     root = tk.Tk()
     root.title("太鼓成绩图生成器")
 
@@ -90,7 +97,9 @@ if __name__ == '__main__':
     entry_text_sub.grid(row=0, column=2, padx=10, pady=5)
 
     tk.Label(root, text="字库").grid(row=1, column=0, padx=10, pady=5)
-    combo_font = Combobox(root, values=["日文字库", "中文字库"], state="readonly", width=28)
+    combo_font = Combobox(
+        root, values=["日文字库", "中文字库"], state="readonly", width=28
+    )
     combo_font.set("日文字库")
     combo_font.grid(row=1, column=1, padx=10, pady=5)
 
@@ -100,7 +109,9 @@ if __name__ == '__main__':
 
     # 输入分数类型
     tk.Label(root, text="分数类型").grid(row=3, column=0, padx=10, pady=5)
-    combo_score_type = Combobox(root, values=["粉雅", "紫雅", "极"], state="readonly", width=28)
+    combo_score_type = Combobox(
+        root, values=["粉雅", "紫雅", "极"], state="readonly", width=28
+    )
     combo_score_type.set("粉雅")  # 默认值
     combo_score_type.grid(row=3, column=1, padx=10, pady=5)
 
@@ -122,12 +133,3 @@ if __name__ == '__main__':
 
     # 运行主循环
     root.mainloop()
-    # background = Image.open('res/background.png')
-    # background = draw_text("旋風ノ舞【地】", background, 120, (250, 150))
-    # background = draw_text("980930", background, 120, (250, 300))
-    # draw_score_rank(background, 95, scale = 2)
-    # draw_small_taiko(background, scale = 2)
-    # draw_difficulty(background, difficulty = 0, scale = 2)
-    # draw_crown(background, type = 1, scale = 2)
-    # background.save('result.png')
-    # background.show()
